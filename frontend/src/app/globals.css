@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+/* ── Design tokens ─────────────────────────────────────────────────────────
+   A dark "studio" shell with an electric-lime signal colour, and a warm
+   paper surface for the finished dossier.                                   */
+:root {
+  --shell: #0a0b0d;
+  --panel: #101114;
+  --panel-2: #15171b;
+  --line: #22252a;
+  --line-2: #2e3137;
+  --text: #edece7;
+  --text-2: #b9bab4;
+  --muted: #80838a;
+  --faint: #565a61;
+  --lime: #d4ff3a;
+  --lime-ink: #0a0b0d;
+  --lime-dim: rgba(212, 255, 58, 0.09);
+  --coral: #ff6b57;
+  --amber: #ffb547;
+
+  --paper: #f4f0e6;
+  --paper-2: #ebe5d7;
+  --paper-ink: #1c1b18;
+  --paper-ink-2: #3a3832;
+  --paper-muted: #77725f;
+  --paper-line: #d9d1bf;
+  --paper-link: #1d4c8f;
+  --stamp-good: #2c7a4b;
+  --stamp-mid: #b06a10;
+  --stamp-low: #b8321f;
+}
+
+@theme inline {
+  --color-shell: var(--shell);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-lime: var(--lime);
+  --color-lime-ink: var(--lime-ink);
+  --color-lime-dim: var(--lime-dim);
+  --color-coral: var(--coral);
+  --color-amber: var(--amber);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-ink: var(--paper-ink);
+  --color-paper-ink-2: var(--paper-ink-2);
+  --color-paper-muted: var(--paper-muted);
+  --color-paper-line: var(--paper-line);
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-instrument);
+  --font-serif: var(--font-newsreader);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--shell);
+  color: var(--text);
+  font-family: var(--font-geist), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--lime-ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+
+/* ── Utilities ─────────────────────────────────────────────────────────── */
+.label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.kbd {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--text-2);
+  background: var(--panel-2);
+}
+
+/* ── Motion ────────────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.75); }
+}
+.pulse-dot { animation: pulse-dot 1.3s ease-in-out infinite; }
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(212, 255, 58, 0.35), 0 0 28px -10px rgba(212, 255, 58, 0.55); }
+  50% { box-shadow: 0 0 0 1px rgba(212, 255, 58, 0.6), 0 0 40px -8px rgba(212, 255, 58, 0.7); }
+}
+.node-glow { animation: glow 2.2s ease-in-out infinite; }
+
+@keyframes beam {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+.beam {
+  position: absolute;
+  top: -1px;
+  height: 3px;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  animation: beam 1.1s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+.skeleton-paper {
+  background: linear-gradient(90deg, var(--paper-2) 0%, #f8f5ee 50%, var(--paper-2) 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 1.8s linear infinite;
+  border-radius: 3px;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes stamp {
+  0% { opacity: 0; transform: scale(1.8) rotate(-14deg); }
+  60% { opacity: 1; transform: scale(0.94) rotate(-9deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-9deg); }
+}
+.stamp { animation: stamp 0.5s cubic-bezier(0.3, 0.8, 0.3, 1) 0.2s both; }
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.caret::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--lime);
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot, .node-glow, .beam, .skeleton-paper, .fade-up, .stamp, .caret::after {
+    animation: none;
+  }
+}
+
+/* ── Markdown: paper dossier ───────────────────────────────────────────── */
+.md-paper {
+  color: var(--paper-ink-2);
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+.md-paper > :first-child { margin-top: 0; }
+.md-paper h1, .md-paper h2, .md-paper h3, .md-paper h4 {
+  font-family: var(--font-geist), system-ui, sans-serif;
+  color: var(--paper-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+/* The dossier header already shows the topic, so a leading H1 is redundant. */
+.md-paper > h1:first-child { display: none; }
+.md-paper h1 { font-size: 1.6rem; font-weight: 600; margin: 2rem 0 1rem; }
+.md-paper h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 2.75rem 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--paper-line);
+}
+.md-paper h3 { font-size: 1.1rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+.md-paper h4 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.md-paper p { margin: 0 0 1.1rem; }
+.md-paper > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-instrument), Georgia, serif;
+  font-size: 4.4rem;
+  line-height: 0.85;
+  padding: 0.35rem 0.6rem 0 0;
+  color: var(--paper-ink);
+}
+.md-paper ul, .md-paper ol { margin: 0 0 1.2rem; padding-left: 1.4rem; }
+.md-paper ul { list-style: square; }
+.md-paper ol { list-style: decimal; }
+.md-paper li { margin: 0.4rem 0; padding-left: 0.25rem; }
+.md-paper li::marker { color: var(--paper-muted); }
+.md-paper strong { color: var(--paper-ink); font-weight: 600; }
+.md-paper a {
+  color: var(--paper-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  word-break: break-word;
+}
+.md-paper blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--paper-ink);
+  font-style: italic;
+  color: var(--paper-ink);
+}
+.md-paper code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.82em;
+  background: var(--paper-2);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+}
+.md-paper pre { background: var(--paper-2); padding: 1rem; border-radius: 4px; overflow-x: auto; margin: 0 0 1rem; }
+.md-paper pre code { background: none; padding: 0; }
+.md-paper hr { border: 0; border-top: 1px solid var(--paper-line); margin: 2rem 0; }
+.md-paper table { width: 100%; border-collapse: collapse; margin: 0 0 1.25rem; font-size: 0.95rem; }
+.md-paper th, .md-paper td { border-bottom: 1px solid var(--paper-line); padding: 0.5rem 0.7rem; text-align: left; }
+.md-paper th { color: var(--paper-ink); font-family: var(--font-geist), sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── Markdown: dark (agent output, critique fallback) ──────────────────── */
+.md-dark {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+.md-dark > :first-child { margin-top: 0; }
+.md-dark h1, .md-dark h2, .md-dark h3, .md-dark h4 {
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.5rem 0 0.6rem;
+}
+.md-dark h1 { font-size: 1.3rem; }
+.md-dark h2 { font-size: 1.1rem; }
+.md-dark h3, .md-dark h4 { font-size: 1rem; }
+.md-dark p { margin: 0 0 0.9rem; }
+.md-dark ul, .md-dark ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+.md-dark ul { list-style: disc; }
+.md-dark ol { list-style: decimal; }
+.md-dark li { margin: 0.3rem 0; }
+.md-dark li::marker { color: var(--faint); }
+.md-dark strong { color: var(--text); font-weight: 600; }
+.md-dark a { color: var(--lime); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; word-break: break-word; }
+.md-dark code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.85em;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.md-dark pre { background: var(--shell); border: 1px solid var(--line); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 1rem; }
+.md-dark pre code { background: none; border: 0; padding: 0; }
+.md-dark blockquote { border-left: 2px solid var(--line-2); padding-left: 1rem; color: var(--muted); margin: 1rem 0; }
+.md-dark hr { border: 0; border-top: 1px solid var(--line); margin: 1.5rem 0; }
+.md-dark table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.md-dark th, .md-dark td { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem; text-align: left; }
+.md-dark th { color: var(--text); }
+
+/* ── Print: export just the dossier ────────────────────────────────────── */
+@media print {
+  @page { margin: 16mm; }
+  body { background: #fff; }
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  .no-print { display: none !important; }
+}

@@ -13,7 +13,7 @@ def run_research_pipeline(topic : str) -> dict:
     search_result = search_agent.invoke({
         "messages" : [("user", f"Find recent, reliable and detailed information about: {topic}")]
     })
-    state["search_results"] = search_result['messages'][-1].content
+    state["search_results"] = search_result['messages'][-1].text
 
     print("\n search result ",state['search_results'])
 
@@ -31,7 +31,7 @@ def run_research_pipeline(topic : str) -> dict:
         )]
     })
 
-    state['scraped_content'] = reader_result['messages'][-1].content
+    state['scraped_content'] = reader_result['messages'][-1].text
 
     print("\nscraped content: \n", state['scraped_content'])
 

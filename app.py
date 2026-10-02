@@ -414,7 +414,7 @@ if st.session_state.running and not st.session_state.done:
         sr = search_agent.invoke({
             "messages": [("user", f"Find recent, reliable and detailed information about: {topic_val}")]
         })
-        results["search"] = sr["messages"][-1].content
+        results["search"] = sr["messages"][-1].text
         st.session_state.results = dict(results)
     st.rerun() if False else None   # keep inline for now
 
@@ -428,7 +428,7 @@ if st.session_state.running and not st.session_state.done:
                 f"Search Results:\n{results['search'][:800]}"
             )]
         })
-        results["reader"] = rr["messages"][-1].content
+        results["reader"] = rr["messages"][-1].text
         st.session_state.results = dict(results)
 
     # ── Step 3: Writer ──
